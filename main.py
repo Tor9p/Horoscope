@@ -1,10 +1,17 @@
-import requests
-from bs4 import BeautifulSoup
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+import uvicorn
+from fastapi import FastAPI
 
+app = FastAPI(title='Horoscope')
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 url = "https://dzen.ru/topic/horoscope"
 
-# znak_zodiak = [oven, telec, bliznec, rak, lev, deva, vesy, scorpion, strelec, kozerog, vodoley, ryby]
 
 znak_zodiak = {
     'овен': 'oven',
@@ -14,46 +21,18 @@ znak_zodiak = {
     'лев': 'lev',
     'дева': 'deva',
     'весы': 'vesy',
-    'скорпион': 'scorpion',
+    'скорпион': 'skorpion',
     'стрелец': 'strelec',
     'козерог': 'kozerog',
     'водолей': 'vodoley',
     'рыбы': 'ryby'
 }
 
-znak = input("Введите ваш знак зодиака: ").lower()
-
-# if znak in znak_zodiak:
-# 	print(znak_zodiak[znak])
-
-# else:
-# 	print('Такой знак зодиака не найден')
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
-# response = requests.get(url)
-
-# print("---------\n", response, '\n---------')
-
-
-# print(bs)
-
-# temp = bs.find('span', 'topic-channel--rich-text__text-24')
-# print(temp.text)
-
-# while znak != "q" or "exit" or "выход" or "выйти" or "в":
-if znak in znak_zodiak:
-	# print(znak_zodiak[znak])
-	url = '-'.join([url, znak_zodiak[znak]])
-	#отладка
-	print(url)
-	# print("---------\n", response, '\n---------')
-
-	response = requests.get(url) 
-	bs = BeautifulSoup(response.text, "lxml")
-	base = bs.find('span', 'topic-channel--rich-text__text-24') 
-	print(base.text)
-	# woman = bs.find('span', 'topic-channel--horoscope-widget__item-Ut')
-	# print("Для женщин: ", woman)
-
-else:
-	print('Такой знак зодиака не найден')
+@app.post("/horoscope", response_class=HTMLResponse)
+async def horoscope(request: Request, zodiac_sign: str = Form(...)):
+    pass
