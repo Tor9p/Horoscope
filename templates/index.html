@@ -9,26 +9,6 @@
 <body>
     <div class="container">
         <h1>Персональный гороскоп</h1>
-        
-        <!-- <form method="post" action="/horoscope" class="horoscope-form">
-            <label for="zodiac_sign">Выберите ваш знак зодиака:</label>
-            <select name="zodiac_sign" id="zodiac_sign" required>
-                <option value="">-- Выберите знак --</option>
-                <option value="овен">Овен</option>
-                <option value="телец">Телец</option>
-                <option value="близнецы">Близнецы</option>
-                <option value="рак">Рак</option>
-                <option value="лев">Лев</option>
-                <option value="дева">Дева</option>
-                <option value="весы">Весы</option>
-                <option value="скорпион">Скорпион</option>
-                <option value="стрелец">Стрелец</option>
-                <option value="козерог">Козерог</option>
-                <option value="водолей">Водолей</option>
-                <option value="рыбы">Рыбы</option>
-            </select>
-            <button type="submit">Узнать гороскоп</button>
-        </form> -->
 
 		<form action="/horoscope" method="post">
 			<label for="sign">Персональный гороскоп</label><br>
@@ -48,16 +28,15 @@
                 <option value="водолей">Водолей</option>
                 <option value="рыбы">Рыбы</option>
 			</select>
-			<input type="submit" value="Отправить">
+			<input id="submit" type="submit" value="Отправить">
 		</form>
 
-
-        {% if prediction %}
         <div class="result">
             <h2>Гороскоп для {{ zodiac_sign }}:</h2>
             <p class="prediction-text">{{ prediction }}</p>
         </div>
-        {% endif %}
+
+
     </div>
 </body>
 </html>

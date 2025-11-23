@@ -44,4 +44,4 @@ def get_horo(znak):
     else:
         return 'Такой знак зодиака не найден'
 
-get_horo("рак")
+# get_horo("рак")

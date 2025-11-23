@@ -5,15 +5,13 @@ from fastapi.templating import Jinja2Templates
 import uvicorn
 from fastapi import FastAPI
 
-from horoscope import get_horo
+import horoscope
 
 app = FastAPI(title='Horoscope')
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
-
-get_horo()
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
@@ -25,20 +23,23 @@ async def read_root(request: Request):
 #     pass
 
 @app.get("/horoscope", response_class=HTMLResponse)
-async def horoscope(request: Request):
+async def horos(request: Request):
      return templates.TemplateResponse("index.html", {"request": request})
 
 
-# заебал меня этот post
 @app.post("/horoscope", response_class=HTMLResponse)
 async def post_horoscope(request: Request, sign: str = Form(...)):
-     pass
-     horo_text = f"sign {sign}"
+     horoscope.znak = sign
+     horo_text = f"Выбран знак: {horoscope.znak}"
+    #  horoscope.get_horo(sign)
+     hr_txt = horoscope.get_horo(sign)
+
 
      return templates.TemplateResponse('horoscope.html', {
           "request": request,
           "user_sign": sign,
-          "horoscope": horo_text
+          "horoscope": horo_text,
+          "text": hr_txt
      })
 
 
