@@ -1,9 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-
-url = "https://dzen.ru/topic/horoscope"
-
+base_url = "https://dzen.ru/topic/horoscope"
 
 znak_zodiak = {
     'овен': 'oven',
@@ -21,22 +19,29 @@ znak_zodiak = {
 }
 
 
-def get_horo():
-    # znak = input("Введите ваш знак зодиака: ").lower()
-    znak = 'овен'
+def get_horo(znak):
     if znak in znak_zodiak:
         try:
-            url = '-'.join([url, znak_zodiak[znak]])
-            #отладка
-            print(url)
+            url = f"{base_url}-{znak_zodiak[znak]}"
+            
+            # отладка
+            print(f"запрос к url: {url}")
             print("------------")
             
             response = requests.get(url) 
-            bs = BeautifulSoup(response.text, "lxml")
-            base = bs.find('span', 'topic-channel--rich-text__text-24')
+            # response.raise_for_status()
 
-            print(base.text)
-        except:
-            pass
+            bs = BeautifulSoup(response.text, "lxml")
+            
+            base = bs.find('span', 'topic-channel--rich-text__text-24')
+            
+            otvet = base.text
+            print(otvet)
+            return otvet
+
+        except AttributeError:
+            return "Не удалось распарсить страничку..."
     else:
-          print('Такой знак зодиака не найден')
+        return 'Такой знак зодиака не найден'
+
+get_horo("рак")
