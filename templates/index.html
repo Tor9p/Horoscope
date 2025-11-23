@@ -8,9 +8,9 @@
 </head>
 <body>
     <div class="container">
-        <h1>🔮 Персональный гороскоп</h1>
+        <h1>Персональный гороскоп</h1>
         
-        <form method="post" action="/horoscope" class="horoscope-form">
+        <!-- <form method="post" action="/horoscope" class="horoscope-form">
             <label for="zodiac_sign">Выберите ваш знак зодиака:</label>
             <select name="zodiac_sign" id="zodiac_sign" required>
                 <option value="">-- Выберите знак --</option>
@@ -28,7 +28,29 @@
                 <option value="рыбы">Рыбы</option>
             </select>
             <button type="submit">Узнать гороскоп</button>
-        </form>
+        </form> -->
+
+		<form action="/horoscope" method="post">
+			<label for="sign">Персональный гороскоп</label><br>
+			<!-- <input type="text" id="name" name="name"><br><br> -->
+			<select name="sign" id="sign" required>
+                <option value="">-- Выберите знак --</option>
+                <option value="овен">Овен</option>
+                <option value="телец">Телец</option>
+                <option value="близнецы">Близнецы</option>
+                <option value="рак">Рак</option>
+                <option value="лев">Лев</option>
+                <option value="дева">Дева</option>
+                <option value="весы">Весы</option>
+                <option value="скорпион">Скорпион</option>
+                <option value="стрелец">Стрелец</option>
+                <option value="козерог">Козерог</option>
+                <option value="водолей">Водолей</option>
+                <option value="рыбы">Рыбы</option>
+			</select>
+			<input type="submit" value="Отправить">
+		</form>
+
 
         {% if prediction %}
         <div class="result">

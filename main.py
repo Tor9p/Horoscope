@@ -20,10 +20,27 @@ async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
+# @app.post("/horoscope", response_class=HTMLResponse)
+# async def horoscope(request: Request, zodiac_sign: str = Form(...)):
+#     pass
+
+@app.get("/horoscope", response_class=HTMLResponse)
+async def horoscope(request: Request):
+     return templates.TemplateResponse("index.html", {"request": request})
+
+
+# заебал меня этот post
 @app.post("/horoscope", response_class=HTMLResponse)
-async def horoscope(request: Request, zodiac_sign: str = Form(...)):
-    pass
+async def post_horoscope(request: Request, sign: str = Form(...)):
+     pass
+     horo_text = f"sign {sign}"
+
+     return templates.TemplateResponse('horoscope.html', {
+          "request": request,
+          "user_sign": sign,
+          "horoscope": horo_text
+     })
 
 
 if __name__ == "__main__":
-     uvicorn.run(app, host="127.0.0.1", port=8080)
+     uvicorn.run(app, host="127.0.0.1", port=1488)
