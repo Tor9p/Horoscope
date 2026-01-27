@@ -1,59 +1,47 @@
-import requests
-from bs4 import BeautifulSoup
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+import uvicorn
+from fastapi import FastAPI
+
+import horoscope
+
+app = FastAPI(title='Horoscope')
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 
-url = "https://dzen.ru/topic/horoscope"
-
-# znak_zodiak = [oven, telec, bliznec, rak, lev, deva, vesy, scorpion, strelec, kozerog, vodoley, ryby]
-
-znak_zodiak = {
-    'овен': 'oven',
-    'телец': 'telec', 
-    'близнецы': 'bliznec',
-    'рак': 'rak',
-    'лев': 'lev',
-    'дева': 'deva',
-    'весы': 'vesy',
-    'скорпион': 'scorpion',
-    'стрелец': 'strelec',
-    'козерог': 'kozerog',
-    'водолей': 'vodoley',
-    'рыбы': 'ryby'
-}
-
-znak = input("Введите ваш знак зодиака: ").lower()
-
-# if znak in znak_zodiak:
-# 	print(znak_zodiak[znak])
-
-# else:
-# 	print('Такой знак зодиака не найден')
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
-# response = requests.get(url)
+# @app.post("/horoscope", response_class=HTMLResponse)
+# async def horoscope(request: Request, zodiac_sign: str = Form(...)):
+#     pass
 
-# print("---------\n", response, '\n---------')
+@app.get("/horoscope", response_class=HTMLResponse)
+async def horos(request: Request):
+     return templates.TemplateResponse("index.html", {"request": request})
 
 
-# print(bs)
+@app.post("/horoscope", response_class=HTMLResponse)
+async def post_horoscope(request: Request, sign: str = Form(...)):
+     horoscope.znak = sign
+     horo_text = f"Выбран знак: {horoscope.znak}"
+    #  horoscope.get_horo(sign)
+     hr_txt = horoscope.get_horo(sign)
 
-# temp = bs.find('span', 'topic-channel--rich-text__text-24')
-# print(temp.text)
 
-# while znak != "q" or "exit" or "выход" or "выйти" or "в":
-if znak in znak_zodiak:
-	# print(znak_zodiak[znak])
-	url = '-'.join([url, znak_zodiak[znak]])
-	#отладка
-	print(url)
-	# print("---------\n", response, '\n---------')
+     return templates.TemplateResponse('horoscope.html', {
+          "request": request,
+          "user_sign": sign,
+          "horoscope": horo_text,
+          "text": hr_txt
+     })
 
-	response = requests.get(url) 
-	bs = BeautifulSoup(response.text, "lxml")
-	base = bs.find('span', 'topic-channel--rich-text__text-24') 
-	print(base.text)
-	# woman = bs.find('span', 'topic-channel--horoscope-widget__item-Ut')
-	# print("Для женщин: ", woman)
 
-else:
-	print('Такой знак зодиака не найден')
+if __name__ == "__main__":
+     uvicorn.run(app, host="127.0.0.1", port=1488)

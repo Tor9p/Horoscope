@@ -1,2 +1,4 @@
 *.exe
 horoscope/
+test/
+__pycache__/

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гороскоп</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Персональный гороскоп</h1>
+
+		<form action="/horoscope" method="post">
+			<label for="sign">Персональный гороскоп</label><br>
+			<!-- <input type="text" id="name" name="name"><br><br> -->
+			<select name="sign" id="sign" required>
+                <option value="">-- Выберите знак --</option>
+                <option value="овен">Овен</option>
+                <option value="телец">Телец</option>
+                <option value="близнецы">Близнецы</option>
+                <option value="рак">Рак</option>
+                <option value="лев">Лев</option>
+                <option value="дева">Дева</option>
+                <option value="весы">Весы</option>
+                <option value="скорпион">Скорпион</option>
+                <option value="стрелец">Стрелец</option>
+                <option value="козерог">Козерог</option>
+                <option value="водолей">Водолей</option>
+                <option value="рыбы">Рыбы</option>
+			</select>
+			<input id="submit" type="submit" value="Отправить">
+		</form>
+
+        <div class="result">
+            <h2>Гороскоп для {{ zodiac_sign }}:</h2>
+            <p class="prediction-text">{{ prediction }}</p>
+        </div>
+
+
+    </div>
+</body>
+</html>
