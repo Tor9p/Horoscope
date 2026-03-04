@@ -38,7 +38,7 @@ async def post_horoscope(request: Request, sign: str = Form(...)):
      return templates.TemplateResponse('horoscope.html', {
           "request": request,
           "user_sign": sign,
-          "horoscope": horo_text,
+          # "horoscope": horo_text, его нахуй не выводить
           "text": hr_txt
      })
 

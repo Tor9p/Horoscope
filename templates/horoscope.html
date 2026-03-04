@@ -3,15 +3,22 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="static/css/style.css">
-	<title>Document</title>
-	<h1>Test</h1>
+	<link rel="stylesheet" href="static/css/style-vv.css">
+	<title>Гороскоп<title>
+	<!-- <h1>Test</h1> -->
 
 </head>
 <body>
-	<h1>Гороскоп для знака {{ user_sign }}</h1>
-    <p>{{ horoscope }}</p>
-	<p>{{text}}</p>
-    <a href="/horoscope">Вернуться к выбору знака</a>
+	<div class="container-two">
+		<h1>Гороскоп для знака {{ user_sign }}</h1>
+    	<!-- <p>{{ horoscope }}</p> -->
+		<p class="cont-tree">{{text}}</p>
+		
+    	<a class="ret-btn" href="/horoscope">Вернуться к выбору знака</a>
+
+
+		
+	</div>
+
 </body>
 </html>
